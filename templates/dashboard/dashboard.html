@@ -1,0 +1,322 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Portal</title>
+    <style>
+        
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a{
+            text-decoration: none;
+            color: rgb(0 2 245);
+        }
+
+        body {
+            font-family: "Montserrat", sans-serif;
+            background-color: #f4f4f4;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #027aff, #6dd5ed);
+            padding: 20px;
+            color: white;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;    
+        }
+        
+        .nav a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+        }
+        
+        .search-section {
+            margin-left: 50px;
+            margin-top: 20px;
+        }
+        
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-dropdown, .search-input, .search-button {
+            margin-right: 10px;
+            padding: 5px 7px;
+            font-size: 15px;
+        }
+        
+        .main-content {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1200px;
+            justify-content: space-around;
+            gap: 40px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex: 1 1 calc(50% - 40px);
+            max-width: calc(50% - 40px);
+            box-sizing: border-box;
+            margin: 0;
+        }
+        
+        .card-header {
+            font-family: "Montserrat", sans-serif;
+            padding: 10px 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        
+        .card-header.orange {
+            background: linear-gradient(to right, #ff6a00, #ee0979);
+        }
+        
+        .card-header.red {
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+        }
+        
+        .card-header.blue {
+            background: linear-gradient(to right, #005c97, #363795);
+        }
+        
+        .card-header.green {
+            background: linear-gradient(to right, #56ab2f, #a8e063);
+        }
+        
+        .card-body {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-body img {
+            width: 150px;
+            height: 80px;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+        
+        .card-container .card:last-child .card-body {
+            align-items: flex-start;
+        }
+        
+        .card-text {
+            text-align: left;
+            margin: 0;
+            flex: 1;
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+        }
+
+        .card-text p{
+            margin: 4px 0px;
+            color: rgb(0 2 245);
+        }
+        
+        .nav-main-div{
+            display: grid;
+            align-items: center;
+            grid-template-columns: 33.33% 33.33% 33.33%;
+            background-color: #e1e1e1;
+            padding: 5px 0px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+        }
+
+        .nav-text{
+            text-align: center;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-style: normal;
+            font-size: 15px;
+        }
+
+        button{
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .card-text1 {
+            text-align: left;
+            margin: 0;
+            flex: 1;
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+            border: 1px solid black;
+            padding: 2px 10px;
+        }
+
+        .card-text1 p {
+            margin: 4px 0px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- <header class="header">
+        <div class="header-content">
+            <div class="logo">Supplier Self-Services</div>
+            <nav class="nav">
+                <a href="#">Home</a>
+                <a href="#">Find</a>
+            </nav>
+        </div>
+    </header> -->
+
+    <nav>
+        <div class="nav-main-div">
+            <div>
+                <img style="width: auto; height: 35px" src="{% static '/images/logo2.png' %}" alt="">
+            </div>
+            <div class="nav-text">
+                Zanvar Group of Industries
+            </div>
+        </div>
+    </nav>
+
+    <section class="search-section">
+        <div class="search-container">
+            <select class="search-dropdown">
+                <option value="purchase-order">Purchase Order</option>
+            </select>
+            <input type="text" class="search-input" placeholder="Search...">
+            <button class="search-button">Search</button>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <div class="card-container">
+            <div class="card">
+                <div class="card-header orange">All Purchase Orders</div>
+                <div class="card-body">
+                    <img src="{% static '/images/dashboard1.jpg' %}" alt="Purchase Order">
+                    <div class="card-text">
+                        <p><a href="/company/{{id}}/po">New ({{po}})</a></p>
+                        <p>In Process (0)</p>
+                        <p>Confirmed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header red">All Schedule Agreement Releases</div>
+                <div class="card-body">
+                    <img src="{% static '/images/dashboard1.jpg' %}" alt="Schedule Agreement">
+                    <div class="card-text">
+                        <p><a href="/company/{{id}}/schedule">New</a></p>
+                        <p>In Process (0)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header blue">All GRN</div>
+                <div class="card-body">
+                    <img src="{% static '/images/dashboard1.jpg' %}" alt="Confirmations">
+                    <div class="card-text">
+                        <p><a href="/company/{{id}}/grn">View GRN List</a></p>
+                        <p><a href="/company/{{id}}/gst">View GST List</a></p>
+                        <!-- <p>Accepted</p>
+                        <p>Partially Accepted</p>
+                        <p>Rejected</p> -->
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header green">All ASNs</div>
+                <div class="card-body">
+                    <img src="{% static '/images/dashboard1.jpg' %}" alt="ASN">
+                    <div class="card-text">
+                        <form class="card-body1" action="asndownload" method="post">
+                            {% csrf_token %}
+                            <button style="color: rgb(0 2 245); background-color:transparent; border: none; cursor: pointer" type="submit" name="download_asn" value="download_asn">Download File Format</button>
+                            
+                        </form>
+                        <!-- <a href="" >Download File Format</a> -->
+                        <form action="uploadasn" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <!-- {{ form.as_p }} -->
+                            <button style="color: rgb(0 2 245); background-color:transparent; border: none; cursor: pointer" type="submit">Upload ASN</button>
+                            <input type="file" id="csv_file" name="csv_file" accept=".csv, .txt, .jpg, .png">
+                        </form>
+                        <!-- <p>Upload ASN</p> -->
+                        <p>Delete ASN</p>
+                        <p>ASN Details</p>
+                        <!-- <p>Doc. Upload</p>
+                        <p>ASN Barcode</p>
+                        <p>Order Collaboration</p>
+                        <p>S-Inv Update</p>
+                        <p>FM Serial QR code</p> -->
+                    </div>
+
+                    {% if data != 0 %}
+                    <div id="popup-div" style="display:block; overflow-y:scroll; position:absolute; background-color: white; width: 80%; left: 150px; height: 300px; top: 150px">
+                        <table>
+                            <tr>
+                                <th class="card-text1">AsnNo</th>
+                                <th class="card-text1">ChallenNo</th>
+                                <th class="card-text1">PoNo</th>
+                                <th class="card-text1">ChallenDate</th>
+                                <th class="card-text1">ERROR</th>
+                            </tr>
+                            {% for details in data %}
+                            <tr>
+                                <td class="card-text1">{{details.AsnNo}}</td>
+                                <td class="card-text1">{{details.ChallenNo}}</td>
+                                <td class="card-text1">{{details.PoNo}}</td>
+                                <td class="card-text1">{{details.ChallenDate}}</td>
+                                <td class="card-text1">{{details.ERROR}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        <span id="close-btn" style="position: absolute; right: 0; top: 0; text-decoration:underline; color:blue; cursor:pointer">Close</span>
+                    </div>
+                    {% endif %}
+
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+
+        let closeBtn = document.getElementById('close-btn');
+        let popupDiv = document.getElementById("popup-div");
+
+        closeBtn.addEventListener("click", ()=>{
+            popupDiv.style.display = "none";
+        })
+
+    </script>
+    
+</body>
+</html>

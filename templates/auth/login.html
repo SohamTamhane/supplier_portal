@@ -192,8 +192,8 @@
             <h2>Welcome Back</h2>
             <form action="login" method="post">
                 {% csrf_token %}
-                <input type="text" placeholder="Your Username" name="username" id="username" required>
-                <input type="password" placeholder="Your Password" name="password" id="password" required>
+                <input type="text" placeholder="Your Vendor Code" name="username" id="username" required>
+                <input type="password" placeholder="Your Pin" name="password" id="password" required>
                 <div class="options">
                     <label><input type="checkbox" checked> Keep me logged in</label>
                     <a href="/auth/reset_password">Forgot Password</a>

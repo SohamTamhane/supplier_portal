@@ -22,4 +22,11 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
     path('auth/', include('accounts.urls')),
+    path('company/<int:id>/', views.dashboard, name='dashboard'),
+    path('company/<int:id>/po', views.poDetails, name='poDetails'),
+    path('company/<int:id>/grn', views.grnDetails, name='grnDetails'),
+    path('company/<int:id>/gst', views.gstDetails, name='gstDetails'),
+    path('company/<int:id>/asndownload', views.downloadAsn, name='asndownload'),
+    path('company/<int:id>/uploadasn', views.uploadAsn, name='uploadasn'),
+    path('company/<int:id>/schedule', views.scheduleDetails, name='scheduleDetails'),
 ]

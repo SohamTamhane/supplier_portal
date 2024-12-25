@@ -1,0 +1,3 @@
+CompanyId,VendorCode,PoNo,ItemNo,Quantity,VendorChallenNo,ChallenDate,NetPoRate,BasicAmount,TaxableAmount,CgstAmount,SgstAmount,IgstAmount,CgstRate,SgstRate,IgstRate,InvoiceValue,Gstin,VehicleNo,TransporterName,IrnNo
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,

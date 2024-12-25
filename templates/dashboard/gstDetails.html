@@ -1,0 +1,289 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Portal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Montserrat", sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .header {
+            background: linear-gradient(to right, #027aff, #6dd5ed);
+            padding: 20px;
+            color: white;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+        }
+
+        .search-section {
+            margin-left: 50px;
+            margin-top: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-dropdown,
+        .search-input,
+        .search-button {
+            margin-right: 10px;
+            padding: 5px 7px;
+            font-size: 15px;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1200px;
+            justify-content: space-around;
+            gap: 40px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex: 1 1 calc(50% - 40px);
+            max-width: calc(100% - 40px);
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        .card-header {
+            font-family: "Montserrat", sans-serif;
+            padding: 10px 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .card-header.orange {
+            background: linear-gradient(to right, #ff6a00, #ee0979);
+        }
+
+        .card-header.red {
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+        }
+
+        .card-header.blue {
+            background: linear-gradient(to right, #005c97, #363795);
+        }
+
+        .card-header.green {
+            background: linear-gradient(to right, #56ab2f, #a8e063);
+        }
+
+        .card-body {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-body1 {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .card-body1 div {
+            margin: 0px 10px;
+        }
+
+        .card-body img {
+            width: 150px;
+            height: 80px;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+
+        .card-container .card:last-child .card-body {
+            align-items: flex-start;
+        }
+
+        .card-text {
+            text-align: left;
+            margin: 0;
+            flex: 1;
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+            border: 1px solid black;
+            padding: 2px 10px;
+        }
+
+        .card-text p {
+            margin: 4px 0px;
+        }
+
+        .nav-main-div {
+            display: grid;
+            align-items: center;
+            grid-template-columns: 33.33% 33.33% 33.33%;
+            background-color: #e1e1e1;
+            padding: 5px 0px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .nav-text {
+            text-align: center;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-style: normal;
+            font-size: 15px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #363795;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-main-div">
+            <div>
+                <a href="/company/{{id}}">
+                    <img style="width: auto; height: 35px" src="{% static '/images/logo2.png' %}" alt="">
+                </a>
+            </div>
+            <div class="nav-text">
+                Zanvar Group of Industries
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="card-container">
+            <div class="card">
+                <div class="card-header blue">All GST Return State</div>
+                <div class="card-body">
+                    <!-- <div > -->
+                    <form class="card-body1" action="gst" method="post">
+                        {% csrf_token %}
+                        <div>
+                            From: <input required type="date" value="{{fromDate}}" name="fromdate" id="fromdate">
+                        </div>
+                        <div>
+                            To: <input required type="date" value="{{toDate}}" name="todate" id="todate">
+                        </div>
+                        <div>
+                            <button type="submit" name="download" value="search">Search</button>
+                        </div>
+                        <div>
+                            <button type="submit" name="download" value="download">Download Excel</button>
+                        </div>
+                    </form>
+                    <!-- </div> -->
+                </div>
+
+                <div style="overflow-x:auto;">
+                    <table>
+                        <tr>
+                            <th class="card-text">LongName</th>
+                            <th class="card-text">PartyBillNo</th>
+                            <th class="card-text">PartyBillDate</th>
+                            <th class="card-text">TrnDate</th>
+                            <th class="card-text">TrnNO</th>
+                            <th class="card-text">SysTaxableValue</th>
+                            <th class="card-text">SysCGstAmt</th>
+                            <th class="card-text">SysSGstAmt</th>
+                            <th class="card-text">SysIGstAmt</th>
+                            <th class="card-text">SysInvoiceValue</th>
+                            <th class="card-text">SysRate</th>
+                        </tr>
+                        {% for details in data %}
+                        <tr>
+                            <td class="card-text">{{details.LongName}}</td>
+                            <td class="card-text">{{details.PartyBillNo}}</td>
+                            <td class="card-text">{{details.PartyBillDate}}</td>
+                            <td class="card-text">{{details.TrnDate}}</td>
+                            <td class="card-text">{{details.TrnNO}}</td>
+                            <td class="card-text">{{details.SysTaxableValue}}</td>
+                            <td class="card-text">{{details.SysCGstAmt}}</td>
+                            <td class="card-text">{{details.SysSGstAmt}}</td>
+                            <td class="card-text">{{details.SysIGstAmt}}</td>
+                            <td class="card-text">{{details.SysInvoiceValue}}</td>
+                            <td class="card-text">{{details.SysRate}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+
+                <!-- {% for details in data %}
+                <div class="card-body">
+                    <div class="card-text">
+                        <p>GstIn: {{details.GstIn}}</p>
+                        <p>Name: {{details.LongName}}</p>
+                        <p>Party BillNo: {{details.PartyBillNo}}</p>
+                        <p>SubGlAcNo: {{details.SubGlAcNo}}</p>
+                        <p>TrnNO: {{details.TrnNO}}</p>
+                        <p>SysTaxableValue: {{details.SysTaxableValue}}</p>
+                        <p>SysCGstAmt: {{details.SysCGstAmt}}</p>
+                        <p>SysSGstAmt: {{details.SysSGstAmt}}</p>
+                        <p>SysIGstAmt: {{details.SysIGstAmt}}</p>
+                        <p>SysInvoiceValue: {{details.SysInvoiceValue}}</p>
+                        <p>SysRate: {{details.SysRate}}</p>
+                        <p>PortalInvoiceDate: {{details.PortalInvoiceDate}}</p>
+                        <p>PortalTrnDate: {{details.PortalTrnDate}}</p>
+                        <p>PortalRate: {{details.PortalRate}}</p>
+                        <p>PortalTaxableValue: {{details.PortalTaxableValue}}</p>
+                        <p>PortalIGstAmt: {{details.PortalIGstAmt}}</p>
+                        <p>PortalCGstAmt: {{details.PortalCGstAmt}}</p>
+                        <p>PortalSGstAmt: {{details.PortalSGstAmt}}</p>
+                        <p>PortalInvoiceValue: {{details.PortalInvoiceValue}}</p>
+                        <p>EmailId: {{details.EmailId}}</p>
+                        <p>Period: {{details.Period}}</p>
+                    </div>
+                </div>
+                {% endfor %} -->
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,11 +1,87 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supplier Portal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        a{
+            text-decoration: none;
+            color: rgb(0 2 245);
+        }
+
+        body{
+            background-color: #f4f4f4;
+        }
+
+        .main-div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .main-div2{
+            text-align: center;
+        }
+
+        .nav-main-div{
+            display: grid;
+            align-items: center;
+            grid-template-columns: 33.33% 33.33% 33.33%;
+            background-color: #e1e1e1;
+            padding: 5px 0px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-text{
+            text-align: center;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            font-style: normal;
+            font-size: 15px;
+        }
+
+        .box1{
+            background-color: white;
+            width: 500px;
+            border: 1px solid gray;
+            padding: 5px 0px;
+            color: rgb(0 2 245);
+            font-size: 14px;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Dashboard Page</h1>
+    <nav>
+        <div class="nav-main-div">
+            <div>
+                <img style="width: auto; height: 35px" src="{% static '/images/logo2.png' %}" alt="">
+            </div>
+            <div class="nav-text">
+                Zanvar Group of Industries
+            </div>
+        </div>
+    </nav>
+    <div class="main-div">
+        <div class="main-div2">
+            {% for company in data %}
+            <div class="box1">  
+                <div><a href="/company/{{company.CompanyId}}">{{company.CompanyName}}</a></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>

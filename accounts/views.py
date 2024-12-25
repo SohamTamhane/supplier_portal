@@ -5,51 +5,89 @@ from .models import UserProfile
 import random
 import datetime
 from django.utils import timezone
+import requests
 
-# Create your views here.
 
 def login(request):
     if(request.method == 'POST'):
         username = request.POST['username']
         password = request.POST['password']
 
-        user = auth.authenticate(username=username, password=password)
-
-        if user is not None:
-            user_profile = UserProfile.objects.filter(user=user).values()
-            is_verified = user_profile[0]['is_verified']
-            
-            if(is_verified):
-                print("Home Page")
-                messages.info(request, "Success")
-                return render(request, 'index.html')
+        try:
+            url = "http://webapp.webhop.net:8399/api/login/SupplierLoginToken"
+            response = requests.post(url=url, data={'vendorCode': username, 'pin': password})
+            token = response.json()
+            # print(token)
+            if(token==2):
+                messages.info(request, "Invalid Credentials")
+                return redirect("login")
             else:
-                return redirect("reset_password")
-        else:
-            messages.info(request, "Invalid Credentials")
+                messages.info(request, "")
+                response1 = redirect("dashboard")
+                response1.set_cookie('token', token)
+                return response1
+
+        except Exception as e:
+            messages.info(request, e)
             return redirect("login")
-        
+
     else:
         messages.info(request, "")
         return render(request, 'auth/login.html')
 
 
-def reset_password1(request):
+def dashboard(request):
     if(request.method == 'POST'):
         email = request.POST['email']
-        otp = random.randint(100000, 999999)
-        user = User.objects.filter(email=email).values()
-        
-        try:
-            user_profile = UserProfile.objects.get(user=user[0]['id'])
-            user_profile.otp = otp
-            time_change = datetime.timedelta(minutes=5) 
-            user_profile.otp_expiry = datetime.datetime.now() + time_change
-            user_profile.save()
+        old_password = request.POST['old_password']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
 
-            return render(request, 'auth/reset_password2.html', {'email': email})
+        if password != confirm_password:
+            messages.info(request, "Password Must be Same")
+            return render(request, 'auth/change_password.html', {'email': email})
+        else:
+            username = User.objects.get(email=email)
+            user = auth.authenticate(username=username.username, password=old_password)
+            print(user)
+            if user is not None:
+                user1 = User.objects.get(email=email)
+                user1.set_password(password)
+                user1.save()
+                messages.info(request, "Success")
+                return redirect('login')
+            else:
+                messages.info(request, "Invalid Credentials")
+                return render(request, 'auth/change_password.html', {'email': email})
+            
+    else:
+        messages.info(request, "")
+        token = request.COOKIES['token']
+        headers = {"Authorization": f"Bearer {token}"}
+        url = "http://webapp.webhop.net:8399/api/SupplierPortalApi/getcompanylist"
+        response = requests.get(url=url, headers=headers)
+        companylist = response.json()['data']
+        return render(request, 'index.html', {'data': companylist})
+
+
+
+
+# Code Needed to be Changed Later -> API Integration
+
+def reset_password1(request):
+    if(request.method == 'POST'):
+        loginId = request.POST['LoginId']
+
+        try:
+            url = f"http://webapp.webhop.net:8399/api/login/gettemppass?LoginId={loginId}"
+            response = requests.post(url=url)
+            # print(response.json())
+
+            messages.info(request, "Email Sent Successfully, Check your Mail Box !!")
+            return render(request, 'auth/login.html')
+
         except Exception as e:
-            messages.info(request, "Invalid Email Id")
+            messages.info(request, "Something Went Wrong !!")
             return render(request, 'auth/reset_password1.html')
         
     else:
@@ -118,3 +156,5 @@ def change_password(request):
     else:
         messages.info(request, "")
         return render(request, 'auth/change_password.html')
+
+
